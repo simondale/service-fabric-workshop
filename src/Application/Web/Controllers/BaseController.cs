@@ -30,31 +30,10 @@ namespace Web.Controllers
             return content;
         }
 
-        protected async Task<Uri> GetServiceUriAsync(string application, string service, string path, Func<ServicePartitionKey> partitionKeyGenerator = null)
+        protected Task<Uri> GetServiceUriAsync(string application, string service, string path, Func<ServicePartitionKey> partitionKeyGenerator = null)
         {
-            var resolver = ServicePartitionResolver.GetDefault();
-            var partition = await resolver.ResolveAsync(
-                new Uri($"fabric:/{application}/{service}"),
-                partitionKeyGenerator?.Invoke() ?? new ServicePartitionKey(),
-                CancellationToken.None);
-
-            var endpoints = partition.Endpoints
-                .Where(ep => ep.Role == ServiceEndpointRole.Stateless || ep.Role == ServiceEndpointRole.StatefulPrimary)
-                .Select(ep => ep.Address)
-                .ToArray();
-
-            var idx = Interlocked.Increment(ref index) % endpoints.Length;
-            var endpoint = endpoints[idx];
-
-            var address = JObject.Parse(endpoint)
-                .SelectToken("Endpoints")
-                .ToObject<JObject>()
-                .Properties()
-                .First()
-                .Value.Value<string>();
-
-            var uri = new Uri($"{address}{path}");
-            return uri;
+            var uri = new Uri($"{path}");
+            return Task.FromResult(uri);
         }
 
         protected async Task<T> DeserializeResponseAsync<T>(HttpResponseMessage message)
