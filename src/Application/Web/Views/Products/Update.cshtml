@@ -1,0 +1,21 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update</h1>
+
+<form asp-controller="Product" asp-action="Update" method="post">
+    <input asp-for="Id" type="hidden" />
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input asp-for="Name" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input asp-for="Price" type="text" /></td>
+        </tr>
+    </table>
+    <span><button type="submit">Submit</button></span>
+</form>
