@@ -1,0 +1,31 @@
+﻿@model System.Collections.Generic.IEnumerable<Statistics>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Statistics</h1>
+
+@foreach (var group in Model.GroupBy(m => m.Id.Date))
+{
+    <h2>@group.Key</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in group.OrderBy(m => m.Name))
+            {
+                <tr>
+                    <td>@m.Name</td>
+                    <td>@m.OrdersCount</td>
+                    <td>@m.OrdersValue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

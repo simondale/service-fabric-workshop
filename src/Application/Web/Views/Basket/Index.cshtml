@@ -27,3 +27,7 @@
     </tbody>
 </table>
 
+<form asp-controller="Basket" asp-action="Order" asp-route-redirect="@Context.Request.Path" method="post">
+    <button type="submit">Place Order</button>
+</form>
+
