@@ -20,36 +20,10 @@ namespace ProductApi.Services
 
         public ProductRepository(StatelessServiceContext context)
         {
-            context.CodePackageActivationContext.ConfigurationPackageModifiedEvent += OnConfigurationPackageModified;
-            OnConfigurationPackageModified(this, new PackageModifiedEventArgs<ConfigurationPackage>
-            {
-                NewPackage = context.CodePackageActivationContext.GetConfigurationPackageObject("Config")
-            });
         }
 
         private void OnConfigurationPackageModified(object sender, PackageModifiedEventArgs<ConfigurationPackage> e)
         {
-            var section = e.NewPackage?.Settings?.Sections?["Database"];
-            var connectionString = section?.Parameters?["ConnectionString"]?.Value;
-            if (connectionString != null)
-            {
-                if (connectionString.Contains("{application:service}"))
-                {
-                    var application = section.Parameters["Application"].Value;
-                    var service = section.Parameters["Service"].Value;
-                    var resolver = ServicePartitionResolver.GetDefault();
-                    var partition = resolver.ResolveAsync(new Uri($"fabric:/{application}/{service}"), new ServicePartitionKey(), CancellationToken.None).GetAwaiter().GetResult();
-                    var address = JObject.Parse(partition.Endpoints.Select(ep => ep.Address).First()).SelectToken("Endpoints").ToObject<JObject>().Properties().First().Value.Value<string>();
-                    connectionString = connectionString.Replace("{application:service}", address);
-                }
-
-                var client = new MongoClient(connectionString);
-                lock (sync)
-                {
-                    database = client.GetDatabase(section.Parameters["Database"].Value);
-                    collection = section.Parameters["Collection"].Value;
-                }
-            }
         }
 
         private IMongoCollection<Product> GetCollection()
