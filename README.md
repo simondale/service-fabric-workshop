@@ -45,3 +45,4 @@ this repository. Details are shown below:
 1. [Lab 1: Creating the Database](docs/Lab1_Database.md)
 1. [Lab 2: Creating the Products API](docs/Lab2_Products.md)
 1. [Lab 3: Creating the Web Application](docs/Lab3_WebApplication.md)
+1. [Lab 4: Creating the Basket API](docs/Lab4_Basket.md)
