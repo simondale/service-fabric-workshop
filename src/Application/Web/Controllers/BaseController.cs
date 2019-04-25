@@ -23,6 +23,22 @@ namespace Web.Controllers
 
         private static int index = 0;
 
+        protected string GetBasketId()
+        {
+            if (!Request.Cookies.TryGetValue("Basket", out var basketId))
+            {
+                basketId = $"{Guid.NewGuid()}";
+                Response.Cookies.Append("Basket", basketId);
+            }
+
+            return basketId;
+        }
+
+        protected void ClearBasketId()
+        {
+            Response.Cookies.Delete("Basket");
+        }
+
         protected StringContent GetJsonContent<T>(T obj)
         {
             var content = new StringContent(JsonConvert.SerializeObject(obj));

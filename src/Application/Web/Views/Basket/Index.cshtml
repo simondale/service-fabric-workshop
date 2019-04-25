@@ -3,9 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>All Products</h1>
-
-@Html.ActionLink("Create", "Create")
+<h1>Basket</h1>
 
 <table>
     <thead>
@@ -19,11 +17,10 @@
         @foreach (var p in Model)
         {
             <tr>
-                <td>@Html.ActionLink(p.Name, "Update", new { id = p.Id })</td>
+                <td>@p.Name</td>
                 <td>@p.Price</td>
                 <td>
-                    @Html.ActionLink("Add to Basket", "Add", "Basket", new { id = p.Id, redirect = Context.Request.Path }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = p.Id })
+                    @Html.ActionLink("Remove", "Delete", new { id = p.Id })
                 </td>
             </tr>
         }
