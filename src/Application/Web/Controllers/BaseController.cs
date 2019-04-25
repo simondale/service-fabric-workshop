@@ -25,18 +25,11 @@ namespace Web.Controllers
 
         protected string GetBasketId()
         {
-            if (!Request.Cookies.TryGetValue("Basket", out var basketId))
-            {
-                basketId = $"{Guid.NewGuid()}";
-                Response.Cookies.Append("Basket", basketId);
-            }
-
-            return basketId;
+            return string.Empty;
         }
 
         protected void ClearBasketId()
         {
-            Response.Cookies.Delete("Basket");
         }
 
         protected StringContent GetJsonContent<T>(T obj)

@@ -16,8 +16,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BasketActor.Interfaces\BasketActor.Interfaces.csproj" />
-  </ItemGroup>
+  
   
 </Project>

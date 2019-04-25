@@ -23,36 +23,22 @@ namespace BasketActor
 
         protected override Task OnActivateAsync()
         {
-            ActorEventSource.Current.ActorMessage(this, "Actor activated.");
-            return StateManager.TryAddStateAsync(StateName, new List<Product>());
+            return Task.CompletedTask;
         }
 
         protected override Task OnDeactivateAsync()
         {
-            ActorEventSource.Current.ActorMessage(this, "Actor deactivated.");
             return Task.CompletedTask;
         }
 
-        public async Task<Product[]> GetProductsInBasket(CancellationToken cancellationToken)
+        public Task<Product[]> GetProductsInBasket(CancellationToken cancellationToken)
         {
-            var state = await StateManager.TryGetStateAsync<List<Product>>(StateName, cancellationToken);
-            return state.HasValue ? state.Value.ToArray() : EmptyBasket;
+            return Task.FromResult(default(Product[]));
         }
 
-        public async Task AddProductToBasket(Product product, CancellationToken cancellationToken)
+        public Task AddProductToBasket(Product product, CancellationToken cancellationToken)
         {
-            var state = await StateManager.TryGetStateAsync<List<Product>>(StateName, cancellationToken);
-            if (state.HasValue)
-            {
-                state.Value.Add(product);
-            }
-            else
-            {
-                state = new ConditionalValue<List<Product>>(true, new List<Product>() { product });
-            }
-
-            await StateManager.SetStateAsync(StateName, state.Value, cancellationToken);
-            await StateManager.SaveStateAsync();
+            return Task.CompletedTask;
         }
 
         public async Task RemoveProductFromBasket(Guid productId, CancellationToken cancellationToken)

@@ -17,9 +17,7 @@ namespace BasketApi.Controllers
         {
             try
             {
-                var actorId = new ActorId($"{id:N}");
-                var actor = ActorProxy.Create<IBasketActor>(actorId, new Uri("fabric:/Basket/BasketActorService"));
-                return Ok(await actor.GetProductsInBasket(CancellationToken.None));
+                return Ok(new { });
             }
             catch (Exception e)
             {
