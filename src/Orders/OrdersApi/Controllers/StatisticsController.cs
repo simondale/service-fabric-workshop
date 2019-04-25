@@ -62,37 +62,9 @@ namespace OrdersApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Statistics>>> Get(string id)
+        public Task<ActionResult<IEnumerable<Statistics>>> Get(string id)
         {
-            try
-            {
-                var statistics = await stateManager.TryGetAsync<IReliableDictionary2<string, string>>(StatisticsName);
-                if (!statistics.HasValue)
-                {
-                    return NotFound();
-                }
-
-                using (var tx = stateManager.CreateTransaction())
-                {
-                    var value = await statistics.Value.TryGetValueAsync(tx, id);
-                    if (!value.HasValue)
-                    {
-                        return NotFound();
-                    }
-
-                    var stats = JsonConvert.DeserializeObject<IEnumerable<Statistics>>(value.Value);
-                    return Ok(stats);
-                }
-            }
-            catch (Exception e)
-            {
-                var response = Json(new
-                {
-                    e.Message
-                });
-                response.StatusCode = 500;
-                return response;
-            }
+            return Task.FromResult((ActionResult<IEnumerable<Statistics>>)Ok(default(IEnumerable<Statistics>)));
         }
     }
 }

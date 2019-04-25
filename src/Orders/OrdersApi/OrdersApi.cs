@@ -50,11 +50,10 @@ namespace OrdersApi
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton(serviceContext)
-                                            .AddSingleton(StateManager)
-                                            .AddSingleton(repository))
+                                            .AddSingleton(StateManager))
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseStartup<Startup>()
-                                    .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.UseUniqueServiceUrl | ServiceFabricIntegrationOptions.UseReverseProxyIntegration)
+                                    .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.UseUniqueServiceUrl)
                                     .UseUrls(url)
                                     .Build();
                     }))
@@ -66,35 +65,9 @@ namespace OrdersApi
         /// This method executes when this replica of your service becomes primary and has write status.
         /// </summary>
         /// <param name="cancellationToken">Canceled when Service Fabric needs to shut down this service replica.</param>
-        protected override async Task RunAsync(CancellationToken cancellationToken)
+        protected override Task RunAsync(CancellationToken cancellationToken)
         {
-            var queue = await StateManager.GetOrAddAsync<IReliableConcurrentQueue<Order>>(StateName);
-            var statistics = await StateManager.GetOrAddAsync<IReliableDictionary2<string, string>>(StatisticsName);
-
-            while (true)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                using (var tx = StateManager.CreateTransaction())
-                {
-                    var result = await queue.TryDequeueAsync(tx, cancellationToken);
-                    if (result.HasValue)
-                    {
-                        var currentStatistics = await repository.AddOrderAsync(result.Value, cancellationToken);
-                        if (currentStatistics != null)
-                        {
-                            var json = JsonConvert.SerializeObject(currentStatistics);
-                            await statistics.AddOrUpdateAsync(tx, $"{result.Value.OrderDateTime:yyyyMMdd}", json, (id, stats) => json);
-                        }
-
-                        await tx.CommitAsync();
-                    }
-                    else
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
-                    }
-                }
-            }
+            return Task.Delay(Timeout.Infinite);
         }
     }
 }

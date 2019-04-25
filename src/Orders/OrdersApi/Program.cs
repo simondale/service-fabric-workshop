@@ -28,19 +28,6 @@ namespace OrdersApi
 
                 ServiceRuntime.RegisterServiceAsync("OrdersApiType", context =>
                 {
-                    if (repository == null)
-                    {
-                        lock (sync)
-                        {
-                            if (repository == null)
-                            {
-                                BsonSerializer.RegisterSerializer(typeof(decimal), new DecimalSerializer(BsonType.Decimal128));
-                                BsonSerializer.RegisterSerializer(typeof(decimal?), new NullableSerializer<decimal>(new DecimalSerializer(BsonType.Decimal128)));
-                                repository = new OrdersRepository(context);
-                            }
-                        }
-                    }
-
                     return new OrdersApi(context, repository);
                 }).GetAwaiter().GetResult();
 

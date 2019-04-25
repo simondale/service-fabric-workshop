@@ -20,28 +20,9 @@ namespace OrdersApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Order order)
+        public Task<ActionResult> Post([FromBody] Order order)
         {
-            try
-            {
-                var state = await stateManager.GetOrAddAsync<IReliableConcurrentQueue<Order>>(StateName);
-
-                using (var tx = stateManager.CreateTransaction())
-                {
-                    await state.EnqueueAsync(tx, order);
-                    await tx.CommitAsync();
-                    return Ok();
-                }
-            }
-            catch (Exception e)
-            {
-                var response = Json(new
-                {
-                    e.Message
-                });
-                response.StatusCode = 500;
-                return response;
-            }
+            return Task.FromResult((ActionResult)Ok());
         }
     }
 }
