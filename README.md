@@ -47,3 +47,5 @@ this repository. Details are shown below:
 1. [Lab 3: Creating the Web Application](docs/Lab3_WebApplication.md)
 1. [Lab 4: Creating the Basket API](docs/Lab4_Basket.md)
 1. [Lab 5: Creating the Orders API](docs/Lab5_Orders.md)
+1. [Lab 6: Creating managed cluster in Azure](docs/Lab6_AzureCluster.md)
+1. [Lab 7: Setting up Azure DevOps pipelines](docs/Lab7_AzureDevOps.md)
