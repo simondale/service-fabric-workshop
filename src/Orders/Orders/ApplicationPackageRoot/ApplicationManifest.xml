@@ -5,13 +5,22 @@
     <Parameter Name="OrdersApi_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="OrdersApi_PartitionCount" DefaultValue="1" />
     <Parameter Name="OrdersApi_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="OrdersApi_MongoDBConnectionString" DefaultValue="mongodb://{application:service}" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="OrdersApiPkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="Database">
+            <Parameter Name="ConnectionString" Value="[OrdersApi_MongoDBConnectionString]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
     <EnvironmentOverrides CodePackageRef="code">
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[OrdersApi_ASPNETCORE_ENVIRONMENT]" />
     </EnvironmentOverrides>

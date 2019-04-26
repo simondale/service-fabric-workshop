@@ -49,3 +49,6 @@ this repository. Details are shown below:
 1. [Lab 5: Creating the Orders API](docs/Lab5_Orders.md)
 1. [Lab 6: Creating managed cluster in Azure](docs/Lab6_AzureCluster.md)
 1. [Lab 7: Setting up Azure DevOps pipelines](docs/Lab7_AzureDevOps.md)
+
+### Optional
+1. [Lab 8: Replace Database guest executable with CosmosDB](docs/Lab8_Optional_CosmosDB.md)

@@ -3,13 +3,22 @@
   <Parameters>
     <Parameter Name="ProductApi_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
     <Parameter Name="ProductApi_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="ProductApi_MongoDBConnectionString" DefaultValue="mongodb://{application:service}" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ProductApiPkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="Database">
+            <Parameter Name="ConnectionString" Value="[ProductApi_MongoDBConnectionString]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
     <EnvironmentOverrides CodePackageRef="code">
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[ProductApi_ASPNETCORE_ENVIRONMENT]" />
     </EnvironmentOverrides>

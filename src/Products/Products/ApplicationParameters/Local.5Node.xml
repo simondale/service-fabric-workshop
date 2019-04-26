@@ -3,5 +3,6 @@
   <Parameters>
     <Parameter Name="ProductApi_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="ProductApi_InstanceCount" Value="1" />
+    <Parameter Name="ProductApi_MongoDBConnectionString" Value="mongodb://{application:service}" />
   </Parameters>
 </Application>
