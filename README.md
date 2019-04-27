@@ -1,5 +1,7 @@
 # Service Fabric, Hands-On
 
+[![Build Status](https://dev.azure.com/simon-dale-bjss/ServiceFabricWorkshop/_apis/build/status/ServiceFabricWorkshop-Azure%20Service%20Fabric%20application-CI?branchName=master)](https://dev.azure.com/simon-dale-bjss/ServiceFabricWorkshop/_build/latest?definitionId=1&branchName=master)
+
 This repository contains Service Fabric applications that utilises a variety of different service types, state and API to demonstrate
 various features of the Service Fabric platform and an example microservice architecture.
 
