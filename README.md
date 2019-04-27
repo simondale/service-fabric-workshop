@@ -52,3 +52,19 @@ this repository. Details are shown below:
 
 ### Optional
 1. [Lab 8: Replace Database guest executable with CosmosDB](docs/Lab8_Optional_CosmosDB.md)
+
+## Prerequisites
+To build and deploy this application you will need a few tools. Here is a list of software that can be used:
+
+### Visual Studio Code or Community Edition
+* [Visual Studio](https://visualstudio.microsoft.com)
+* [Visual Studio Code](https://code.visualstudio.com)
+
+### Service Fabric SDK
+* [Service Fabric SDK](https://www.microsoft.com/web/handlers/webpi.ashx?command=getinstallerredirect&appid=MicrosoftAzure-ServiceFabric-CoreSDK)
+
+### Azure Subscription
+* [Azure](https://portal.azure.com)
+
+### Azure DevOps Account
+* [Azure DevOps](https://dev.azure.com)
